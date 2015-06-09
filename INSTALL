@@ -1,0 +1,25 @@
+List of files
+
+excanvas.js: support routines for HTML5 canvas on IE8
+RGraph.*: from Richard Heyes’ excellent RGraph Javascript graphing library: http://www.rgraph.net/
+testserver.js: main server app
+index.html: main client app
+
+To run, ensure you have node.js installed, and use npm to install socket.io
+
+$ npm install socket.io
+
+To run the server app, modify the connect() line in index.html so that
+it refers to your externally available name.
+
+Then either:
+- modify testserver.js to listen on port 80 (at the bottom), or
+- use something similar to the included OpenBSD pf.conf to have tcp/80
+  delivered to testserver.js’s tcp/8080
+
+Have the UNIX shell start a while loop to execute the server
+(since it will automatically exit approximately every 20 minutes.
+Specify, on the server command line, the files explicitly permitted
+to be served by HTTP. Eg.
+$ chmod u+x testserver.js
+$ while ./testserver.js index.html RGraph.* excanvas.js ; do sleep 30 ; done
