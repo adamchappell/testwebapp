@@ -145,7 +145,8 @@ div {
         timeslot: new Array(),
     };
 
-    var socket = io.connect(window.location.href);
+    // window.location.href doesn't work here
+    var socket = io.connect("http://test.pktsrc.net/");
 
     // Receive data event from remote server
     socket.on('stats', function (receivedData) {
