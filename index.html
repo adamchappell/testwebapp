@@ -88,7 +88,7 @@ div {
     // Send a message to the server to have it allocate resources
     var malloc = function() {
         if (socket!==null) {
-            if (socket.socket.connected===true) {
+            if (socket.connected===true) {
                 socket.emit("malloc");
             }
         }
@@ -98,19 +98,19 @@ div {
     var onTimeout = function() {
         var string="not connected (try to refresh browser page)";
         if (socket!==null) {
-            if (socket.socket.connected===true) {
+            if (socket.connected===true) {
                 string = "connected";
-                if (socket.socket.transport.name!==null) {
-                    string += " via " + socket.socket.transport.name;
-                    if (socket.socket.remoteHost!==null) {
-                        string += " to " + socket.socket.remoteHost;
+                if (socket.io.engine.transport!==null) {
+                    string += " via " + socket.io.engine.transport.name;
+                    if (socket.remoteHost!==null) {
+                        string += " to " + socket.remoteHost;
                     }
                 }
-            } else if (socket.socket.connecting===true) {
+            } else if (socket.connecting===true) {
                 string = "connecting...";
-            } else if (socket.socket.reconnecting===true) {
+            } else if (socket.reconnecting===true) {
                 string = "reconnecting ";
-                for (var i=0; i<parseInt(socket.socket.reconnectionAttempts); i++) {
+                for (var i=0; i<parseInt(socket.reconnectionAttempts); i++) {
                     string+=".";
                 }
             }
@@ -155,7 +155,7 @@ div {
         var div = document.getElementById("memoryGraph");
 
         // Update the remote host
-        socket.socket.remoteHost = receivedData.hostname;
+        socket.remoteHost = receivedData.hostname;
 
         // Update the page's data store with the result of the event
         for (var key in DATA) {
